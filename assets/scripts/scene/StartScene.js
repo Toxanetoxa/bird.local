@@ -28,6 +28,17 @@ class StartScene extends Phaser.Scene {
         this.ads = this.add.sprite(game.config.width / 2, game.config.height - 120, 'ads').setOrigin(0.5).setInteractive()
         this.ads.scaleX = 0.5
         this.ads.scaleY = 0.5
+        this.ads.title = this.add.text(game.config.width / 2, game.config.height - 125, [` Убрать`, `рекламу`], {
+            font: '12 YanoneKaffeesatz', fill: '#fec000'
+        }).setOrigin(0.5)
+
+        this.ads.on('pointerover', function () {
+            this.setFrame('hover');
+        });
+
+        this.ads.on('pointerout', function () {
+            this.setFrame('active');
+        })
 
         this.ads.on('pointerdown', function () {
             window.open('https://google.com', "_blank");
