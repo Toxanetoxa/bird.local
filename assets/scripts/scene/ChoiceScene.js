@@ -4,11 +4,14 @@ class ChoiceScene extends Phaser.Scene {
     }
 
     create() {
+        this.sliderCount = 2
+
         this.createBackground()
         this.createTitle()
         this.createName()
         this.createPrev()
         this.createNext()
+        this.createSlider()
     }
 
     update() {
@@ -50,6 +53,20 @@ class ChoiceScene extends Phaser.Scene {
         this.next.scaleY = 0.4
         this.next.on('pointerdown', function () {
             console.log('next')
+            this.scene.sliderCount = this.scene.sliderCount + 1
         })
+    }
+
+    createSlider() {
+        this.chickenGroup = this.add.group({
+            key: 'chicken',
+            frame: [0, 1, 2, 3, 4],
+            setXY: {
+                x: -game.config.width,
+                y: game.config.height / 2,
+                stepX: game.config.width / 2,
+                stepY: 0
+            }
+        });
     }
 }
