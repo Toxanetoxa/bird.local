@@ -8,6 +8,7 @@ class LeaderScene extends Phaser.Scene {
         this.createColorBg()
         this.createTitle()
         this.leaderTable()
+        this.createBtnBack()
     }
 
     update() {
@@ -47,5 +48,15 @@ class LeaderScene extends Phaser.Scene {
         const graphics = this.add.graphics();
         graphics.fillStyle(0x000000, 0.5)
         graphics.fillRect(0, 0, config.width, config.height)
+    }
+
+    createBtnBack() {
+        this.btnBack = this.add.text(game.config.width / 2, (game.config.height) - 100, "Назад", {
+            font: '42px YanoneKaffeesatz', fill: '#FFFFFF'
+        }).setOrigin(0.5).setInteractive({useHandCursor: true})
+
+        this.btnBack.on('pointerdown', function () {
+            this.scene.scene.start('Start')
+        })
     }
 }
