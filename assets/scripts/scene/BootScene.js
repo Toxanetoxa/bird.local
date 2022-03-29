@@ -8,7 +8,8 @@ class BootScene extends Phaser.Scene {
         this.load.image('background', '/assets/sprites/background.jpg')
         this.load.image('leaders', '/assets/sprites/leaders.png')
         this.load.image('logo', '/assets/sprites/logo.png')
-        this.load.image('share', '/assets/sprites/share.png')
+        this.load.image('left-arrow', '/assets/sprites/left-arrow.png')
+        this.load.image('right-arrow', '/assets/sprites/right-arrow.png')
     }
 
     create() {

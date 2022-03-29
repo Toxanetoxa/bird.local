@@ -25,7 +25,7 @@ class StartScene extends Phaser.Scene {
     }
 
     adsButton() {
-        this.ads = this.add.sprite(game.config.width / 2, game.config.height - 120, 'ads').setOrigin(0.5).setInteractive()
+        this.ads = this.add.sprite(game.config.width / 2, game.config.height - 120, 'ads').setOrigin(0.5).setInteractive({useHandCursor: true})
         this.ads.scaleX = 0.5
         this.ads.scaleY = 0.5
         this.ads.title = this.add.text(game.config.width / 2, game.config.height - 125, [` Убрать`, `рекламу`], {
@@ -62,7 +62,7 @@ class StartScene extends Phaser.Scene {
     }
 
     leadersBtn() {
-        this.leaders = this.add.sprite(game.config.width / 2, game.config.height - 50, 'leaders').setOrigin(0.5).setInteractive()
+        this.leaders = this.add.sprite(game.config.width / 2, game.config.height - 50, 'leaders').setOrigin(0.5).setInteractive({useHandCursor: true})
         this.leaders.scaleX = 0.6
         this.leaders.scaleY = 0.6
 
@@ -88,12 +88,20 @@ class StartScene extends Phaser.Scene {
     }
 
     shareBtn() {
-        this.share = this.add.sprite(game.config.width / 2 - 100, game.config.height - 120, 'share').setOrigin(0.5).setInteractive()
+        this.share = this.add.sprite(game.config.width / 2 - 100, game.config.height - 120, 'share').setOrigin(0.5).setInteractive({useHandCursor: true}).setFrame('active')
         this.share.scaleX = 0.5
         this.share.scaleY = 0.5
 
         this.share.on('pointerdown', function () {
             window.open('https://google.com', "_blank");
+        })
+
+        this.share.on('pointerover', function () {
+            this.setFrame('hover');
+        });
+
+        this.share.on('pointerout', function () {
+            this.setFrame('active');
         })
     }
 
@@ -104,7 +112,7 @@ class StartScene extends Phaser.Scene {
     }
 
     playButton() {
-        this.playBtn = this.add.sprite(game.config.width / 2, 50, 'play-button', 0).setInteractive().setOrigin(.5, -1.5);
+        this.playBtn = this.add.sprite(game.config.width / 2, 50, 'play-button', 0).setInteractive({useHandCursor: true}).setOrigin(.5, -1.5);
         this.playBtn.scaleX = 0.5
         this.playBtn.scaleY = 0.5
 

@@ -36,20 +36,18 @@ class ChoiceScene extends Phaser.Scene {
     }
 
     createPrev() {
-        this.prev = this.add.text(game.config.width / 2 - 100, 200, "Prev", {
-            font: '42px YanoneKaffeesatz', fill: '#FFFFFF'
-        }).setOrigin(0.5).setInteractive()
-
+        this.prev = this.add.sprite(game.config.width / 2 - 100, 200, 'left-arrow').setOrigin(0.5).setInteractive({useHandCursor: true})
+        this.prev.scaleX = 0.4
+        this.prev.scaleY = 0.4
         this.prev.on('pointerdown', function () {
             console.log('prev')
         })
     }
 
     createNext() {
-        this.next = this.add.text(game.config.width / 2 + 100, 200, "Next", {
-            font: '42px YanoneKaffeesatz', fill: '#FFFFFF'
-        }).setOrigin(0.5).setInteractive()
-
+        this.next = this.add.sprite(game.config.width / 2 + 100, 200, 'right-arrow').setOrigin(0.5).setInteractive({useHandCursor: true})
+        this.next.scaleX = 0.4
+        this.next.scaleY = 0.4
         this.next.on('pointerdown', function () {
             console.log('next')
         })
