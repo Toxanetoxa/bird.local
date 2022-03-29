@@ -9,7 +9,6 @@ class BootScene extends Phaser.Scene {
         this.load.image('background', '/assets/sprites/background.jpg')
         this.load.image('leaders', '/assets/sprites/leaders.png')
         this.load.image('logo', '/assets/sprites/logo.png')
-        this.load.image('music', '/assets/sprites/music.png')
         this.load.image('share', '/assets/sprites/share.png')
     }
 

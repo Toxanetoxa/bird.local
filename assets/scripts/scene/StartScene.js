@@ -13,6 +13,7 @@ class StartScene extends Phaser.Scene {
         this.shareBtn()
         this.musicBtn()
         this.leadersBtn()
+        this.playThemeSong()
     }
 
     update() {
@@ -60,13 +61,19 @@ class StartScene extends Phaser.Scene {
     }
 
     musicBtn() {
-        this.music = this.add.sprite(game.config.width / 2 + 100, game.config.height - 120, 'music').setOrigin(0.5).setInteractive()
+        this.music = this.add.sprite(game.config.width / 2 + 100, game.config.height - 120, 'music').setOrigin(0.5).setInteractive({useHandCursor: true})
         this.music.scaleX = 0.5
         this.music.scaleY = 0.5
 
-        this.music.on('pointerdown', function () {
-            console.log('music click')
-        })
+        this.music.on('pointerup', () => {
+            if (this.music.frame.name === 'music-active') {
+                this.music.setFrame('music-off')
+                this.sounds.theme.pause()
+            } else if (this.music.frame.name === 'music-off') {
+                this.music.setFrame('music-active')
+                this.sounds.theme.resume()
+            }
+        });
     }
 
     shareBtn() {
@@ -82,7 +89,7 @@ class StartScene extends Phaser.Scene {
     createColorBg() {
         const graphics = this.add.graphics();
         graphics.fillStyle(0x000000, 0.5)
-        graphics.fillRect(0,0, config.width, config.height)
+        graphics.fillRect(0, 0, config.width, config.height)
     }
 
     playButton() {
@@ -101,6 +108,18 @@ class StartScene extends Phaser.Scene {
         this.playBtn.on('pointerdown', function () {
             this.setFrame('play')
             this.scene.scene.start('Choice')
+        })
+    }
+
+    playThemeSong() {
+        this.sounds = {
+            theme: this.sound.add('theme')
+        }
+
+        this.sounds.theme.loop = true;
+
+        this.sounds.theme.play({
+            volume: 0.4
         })
     }
 }
