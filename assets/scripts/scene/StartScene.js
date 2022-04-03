@@ -11,14 +11,17 @@ class StartScene extends Phaser.Scene {
         this.gameLogo()
         this.adsButton()
         this.shareBtn()
-        this.musicBtn()
         this.leadersBtn()
+        this.musicBtn()
         this.playThemeSong()
     }
 
     update() {
         this.bg.tilePositionX += 0.2
     }
+
+
+
 
     createBackground() {
         this.bg = this.add.tileSprite(0, 0, config.width, config.height, 'background').setOrigin(0)
@@ -68,6 +71,7 @@ class StartScene extends Phaser.Scene {
 
         this.leaders.on('pointerdown', function () {
             this.scene.scene.start('Leader')
+            this.scene.sounds.theme.stop()
         })
     }
 
@@ -127,6 +131,7 @@ class StartScene extends Phaser.Scene {
         this.playBtn.on('pointerdown', function () {
             this.setFrame('play')
             this.scene.scene.start('Choice')
+            this.scene.sounds.theme.stop()
         })
     }
 
