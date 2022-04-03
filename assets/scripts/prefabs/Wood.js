@@ -46,5 +46,13 @@ class Wood extends Phaser.GameObjects.Sprite {
 
         this.play('getWood')
     }
+
+    stopMove() {
+        this.body.enable = false
+    }
+
+    startMove() {
+        this.body.enable = true
+    }
 }
 

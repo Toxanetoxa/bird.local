@@ -26,6 +26,7 @@ class BootScene extends Phaser.Scene {
         this.load.atlas('share', '/assets/sprites/share.png', '/assets/sprites/share.json')
         this.load.atlas('wood', '/assets/sprites/wood.png', '/assets/sprites/wood.json')
         this.load.atlas('play', '/assets/sprites/play.png', '/assets/sprites/play.json')
+        this.load.atlas('boom', '/assets/sprites/boom.png', '/assets/sprites/boom.json')
 
         this.load.audio('theme', 'assets/sounds/Monkeys-Spinning-Monkeys.mp3')
         this.load.audio('jump', 'assets/sounds/61847__simon-rue__boink-v3.mp3')

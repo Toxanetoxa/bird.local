@@ -17,6 +17,8 @@ class LeaderScene extends Phaser.Scene {
         this.bg.tilePositionX += 0.2
     }
 
+
+
     createBackground() {
         this.bg = this.add.tileSprite(0, 0, config.width, config.height, 'background').setOrigin(0)
     }
@@ -49,7 +51,7 @@ class LeaderScene extends Phaser.Scene {
                 this.listPerson = this.add.sprite(game.config.width / 2 - 160, 240 + (col * 50), 'chicken').setOrigin(.5)
                 this.listPerson.scaleX = 0.3
                 this.listPerson.scaleY = 0.3
-            } else  {
+            } else {
                 graphics.fillStyle(0x351169, 1)
 
                 graphics.fillRoundedRect(game.config.width / 2 - 150, 230 + (col * 50), 300, 40, 10)

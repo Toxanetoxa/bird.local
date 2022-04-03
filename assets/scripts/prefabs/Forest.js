@@ -1,6 +1,7 @@
 class Forest extends Phaser.Physics.Arcade.Group {
     constructor(scene) {
         super(scene.physics.world, scene);
+        this.is_pause = false
         this.scene = scene
         this.timer = this.scene.time.addEvent({
             delay: 2000,
@@ -20,5 +21,15 @@ class Forest extends Phaser.Physics.Arcade.Group {
         this.add(object)
 
         object.move()
+
+        if (this.is_pause) {
+            object.stopMove()
+        } else {
+            object.startMove()
+        }
+    }
+
+    statusPause(pause) {
+        this.is_pause = pause
     }
 }

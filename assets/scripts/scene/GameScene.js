@@ -7,34 +7,43 @@ class GameScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 
-    async create() {
+    create() {
         // info blocks
         this.createBackground() // созданиие общего бекграунда
-        this.createPause()
+        this.createPauseScreen()
+        this.clickPause()
         this.createRecord()
         this.createScore()
         this.createClock()
         this.createSounds()
 
+        this.bgPosition = 0.5
+
         // game objects
+        this.is_pause = false
 
         this.player = new Player(this)
 
-        this.forest = await new Forest(this)
+        this.forest = new Forest(this)
 
         this.timeout = config.timeout
 
-        this.objects = await new Objects(this)
+        this.objects = new Objects(this)
 
-        this.physics.add.overlap(this.objects , this.player, this.onOverlap, undefined, this)
+        this.physics.add.overlap(this.objects, this.player, this.onOverlap, undefined, this)
+    }
 
+    update() {
+        if (this.player.y > config.height) this.onKilled('felldown')
 
-        this.createCompleteEvents()
+        this.player.move()
+
+        this.bg.tilePositionX += this.bgPosition
     }
 
     onOverlap(source, target) {
         if (target.frame.texture.key === 'rocket') {
-            this.player.emit('killed')
+            this.onKilled('rocket')
         } else {
             this.scorePointValue.setText(config.score++)
             this.sounds.bell.play({
@@ -43,25 +52,24 @@ class GameScene extends Phaser.Scene {
         }
     }
 
-    update() {
-        if (this.player.y > config.height) this.player.emit('killed')
+    onKilled(collision) {
+        if (collision === 'rocket') {
+            this.pauseBtn.setFrame('play')
+            this.sounds.theme.stop()
+            this.player.stopMove()
+            this.player.rocketBoom()
+            this.forest.statusPause(true)
+        }
 
-        this.player.move()
-
-        this.bg.tilePositionX += 0.5
+        this.time.addEvent({
+            delay: 1500,
+            callback: this.goRestartScene,
+            callbackScope: this
+        })
     }
 
-    createCompleteEvents() {
-        this.player.once('killed', this.onComplete, this)
-    }
-
-    onComplete() {
-        this.scene.start('Restart', {
-            score: config.score
-        })
-        this.sounds.theme.stop({
-            volume: 1
-        })
+    goRestartScene() {
+        this.scene.start('Restart')
     }
 
     createBackground() {
@@ -76,7 +84,7 @@ class GameScene extends Phaser.Scene {
         this.clockText = this.add.text(game.config.width - 82, 60, "Ваше время!", {
             font: '16px YanoneKaffeesatz',
             fill: '#a9a3e1',
-            strokeThickness : 6,
+            strokeThickness: 6,
             stroke: '#2b237f'
         })
 
@@ -98,7 +106,7 @@ class GameScene extends Phaser.Scene {
                 if (second > 60) {
                     second = 0
                     preSec = 0
-                    min += + 1
+                    min += +1
                 }
 
                 if (min > 9) {
@@ -138,26 +146,49 @@ class GameScene extends Phaser.Scene {
         }).setOrigin(0.5)
     }
 
-    createPause() {
+    clickPause() {
         this.pauseBtn = this.add.sprite(game.config.width - 75, game.config.height - 75, 'play').setInteractive({useHandCursor: true})
         this.pauseBtn.scaleX = 0.5
         this.pauseBtn.scaleY = 0.5
 
         this.pauseBtn.on('pointerdown', () => {
             if (this.pauseBtn.frame.name === 'pause') {
+                this.is_pause = true
+
+                this.bgPosition = 0
                 this.pauseBtn.setFrame('play')
                 this.sounds.theme.pause()
-                this.scene.pause()
+                this.player.stopMove()
+                this.objects.statusPause(this.is_pause)
+                this.forest.statusPause(this.is_pause)
+                this.togglePauseScreen(this.is_pause)
             } else if (this.pauseBtn.frame.name === 'play') {
+                this.is_pause = false
+
+                this.bgPosition = 0.5
                 this.pauseBtn.setFrame('pause')
                 this.sounds.theme.resume()
-                this.scene.resume('Game')
+                this.player.startMove()
+                this.objects.statusPause(this.is_pause)
+                this.forest.statusPause(this.is_pause)
+                this.togglePauseScreen(this.is_pause)
             }
-        }, this);
+        }, this)
+    }
 
-        // this.scene.scene.pause();
-        // console.log('pause')
+    createPauseScreen() {
+        this.pauseBg = this.add.graphics();
+        this.pauseBg.fillStyle(0x000000, 0.5)
+        this.pauseBg.fillRect(0, 0, config.width, config.height)
 
+        this.txt_pause = this.add.text(game.config.width / 2, game.config.height / 2, 'Pause', config.fontStyle)
+
+        this.togglePauseScreen(false)
+    }
+
+    togglePauseScreen(is_visible) {
+        this.pauseBg.setVisible(is_visible)
+        this.txt_pause.setVisible(is_visible)
     }
 
     createRecord() {

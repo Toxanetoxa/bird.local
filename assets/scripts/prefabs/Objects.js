@@ -1,6 +1,10 @@
 class Objects extends Phaser.Physics.Arcade.Group {
     constructor(scene) {
         super(scene.physics.world, scene);
+        this.is_pause = false
+        this.kill = false
+        this.collision = ''
+
         this.scene = scene
         // this.countMax = 100; // Максималтное кол-во инитов
         // this.countCreated = 0;  // Счетик создания кол-во инитов
@@ -33,8 +37,19 @@ class Objects extends Phaser.Physics.Arcade.Group {
             object.reset()
         }
 
-        object.move()
+        if (this.is_pause) {
+            object.stopMove()
+        } else {
+            object.startMove()
+        }
 
+
+
+        object.move()
         // this.countCreated++ //при каждом вызове увеличить на 1
+    }
+
+    statusPause(pause, collision) {
+        this.is_pause = pause
     }
 }
