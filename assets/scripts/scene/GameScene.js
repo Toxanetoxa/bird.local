@@ -17,7 +17,10 @@ class GameScene extends Phaser.Scene {
         this.createSounds()
 
         // game objects
+
         this.player = new Player(this)
+
+        this.forest = await new Forest(this)
 
         this.timeout = config.timeout
 
@@ -25,7 +28,6 @@ class GameScene extends Phaser.Scene {
 
         this.physics.add.overlap(this.objects , this.player, this.onOverlap, undefined, this)
 
-        this.forest = await new Forest(this)
 
         this.createCompleteEvents()
     }
