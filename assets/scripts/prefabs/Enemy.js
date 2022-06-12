@@ -29,6 +29,14 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.scaleY = 0.7 // размеры
     }
 
+    stopMove() {
+        this.body.enable = false
+    }
+
+    startMove() {
+        this.body.enable = true
+    }
+
     // reset() {
     //     // оптимизация
     //     const data = Enemy.generateAttribites()

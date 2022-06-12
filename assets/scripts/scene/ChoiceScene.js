@@ -4,14 +4,13 @@ class ChoiceScene extends Phaser.Scene {
     }
 
     create() {
-        this.sliderCount = 2
-
         this.createBackground()
         this.createTitle()
         this.createName()
         this.createPrev()
         this.createNext()
         this.createSlider()
+        this.playThemeSong()
     }
 
     update() {
@@ -35,6 +34,7 @@ class ChoiceScene extends Phaser.Scene {
 
         this.name.on('pointerdown', function () {
             this.scene.scene.start('Game')
+            this.scene.sounds.theme.stop()
         })
     }
 
@@ -59,14 +59,21 @@ class ChoiceScene extends Phaser.Scene {
 
     createSlider() {
         this.chickenGroup = this.add.group({
-            key: 'chicken',
-            frame: [0, 1, 2, 3, 4],
-            setXY: {
-                x: -game.config.width,
-                y: game.config.height / 2,
-                stepX: game.config.width / 2,
-                stepY: 0
+            key: 'chicken', frame: [0, 1, 2, 3, 4], setXY: {
+                x: -game.config.width, y: game.config.height / 2, stepX: game.config.width / 2, stepY: 0
             }
         });
+    }
+
+    playThemeSong() {
+        this.sounds = {
+            theme: this.sound.add('theme')
+        }
+
+        this.sounds.theme.loop = true;
+
+        this.sounds.theme.play({
+            volume: 0.4
+        })
     }
 }

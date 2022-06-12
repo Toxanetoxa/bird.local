@@ -33,10 +33,31 @@ class Player extends Phaser.GameObjects.Sprite {
     move() {
         this.scene.input.on('pointerdown', () => {
             this.body.setVelocityY(this.velocity);
+
             this.scene.sounds.jump.play({
                 volume: 0.4
             })
         })
+    }
+
+    stopMove() {
+        this.body.enable = false
+    }
+
+    startMove() {
+        this.body.enable = true
+    }
+
+    rocketBoom() {
+        const frames = this.scene.anims.generateFrameNames('boom', {
+            prefix: 'boom', start: 0, end: 8
+        })
+
+        this.scene.anims.create({
+            key: 'boomChicken', frames, frameRate: 3, repeat: -1
+        })
+
+        this.play('boomChicken')
     }
 }
 

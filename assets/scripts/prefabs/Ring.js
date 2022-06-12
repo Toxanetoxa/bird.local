@@ -70,5 +70,13 @@ class Ring extends Phaser.GameObjects.Sprite {
 
         this.play('flyRing')
     }
+
+    stopMove() {
+        this.body.enable = false
+    }
+
+    startMove() {
+        this.body.enable = true
+    }
 }
 
