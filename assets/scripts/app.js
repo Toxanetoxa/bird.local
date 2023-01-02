@@ -1,5 +1,5 @@
 let config = {
-    type: Phaser.AUTO,
+    type: Phaser.AUTO, //webgl or canvas
     width: 720,
     height: 761,
     scene: [BootScene, PreloadScene, StartScene, LeaderScene, ChoiceScene, RestartScene, GameScene],
@@ -54,7 +54,7 @@ let config = {
         default: 'arcade',
         arcade: {
             debug: true,
-            gravity: 0
+            gravity: 10
         }
     },
     userId: 4,

@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'YanoneKaffeesatz';
+  src: url("../fonts/YanoneKaffeesatzSemiBold.ttf");
+}
+
+.fontPreload {
+  font-family: 'YanoneKaffeesatz',sans-serif;
+  position: absolute;
+  left: -100px;
+}
